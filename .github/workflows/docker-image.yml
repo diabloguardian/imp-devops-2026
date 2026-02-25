@@ -12,5 +12,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag simpleapp-py:$(date +%s)
+      run: docker build . --file simple-app-py/Dockerfile --tag simpleapp-py:$(date +%s)
       
