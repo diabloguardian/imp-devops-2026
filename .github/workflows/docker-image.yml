@@ -11,10 +11,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set current date variable
+      run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_ENV
     - name: Build the Docker image
-      run: docker build . --file simple-app-py/Dockerfile --tag ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:$(date +%s)
+      run: docker build . --file simple-app-py/Dockerfile --tag ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
     - name: Push image to Dockerhub
       run: | 
        docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-       docker push ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:$(date +%s)
+       docker push ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
       
