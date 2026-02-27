@@ -5,6 +5,10 @@ on:
     paths:
       - 'simple-app-py/Dockerfile'
       - 'simple-app-py/*.py'
+  pull_request:
+    paths:
+      - 'simple-app-py/Dockerfile'
+      - 'simple-app-py/*.py'
 
 jobs:
 
