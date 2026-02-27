@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt
 COPY simple-app-py/*.py ./
 RUN rm requirements.txt
 
+
 ### Stage final
 
 FROM python:3.14-slim

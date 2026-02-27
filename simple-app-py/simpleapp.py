@@ -9,7 +9,7 @@ app = Flask(__name__)
 def hello():
     current_datetime = datetime.now()
     formated_datetime = current_datetime.strftime("%d-%m-%Y %H:%M:%S")
-    return f'<h1>Hello Dennys! time is: {formated_datetime}</h1>'
+    return f'<h1>Hello Dennys!</h1><br><h2>Time is: {formated_datetime}</h2>'
 
 if __name__ == '__main__':
     # Run the app server
