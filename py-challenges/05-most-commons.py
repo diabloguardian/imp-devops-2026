@@ -20,6 +20,8 @@ def most_commons(string):
                 break
 
 
+most_commons("aabbbccde")
+
 
 
 #https://www.hackerrank.com/challenges/most-commons/problem?isFullScreen=true
@@ -42,23 +44,8 @@ def most_commons(string):
 #     
 #     Iterar sobre el diccionario ordenado
 #         Imprimir la llave y el valor
-#         Detener el ciclo a la tercer iteración
+#         Detener el ciclo a la tercer
 #
 #
 #
-
-
-
-
-
-
-
-
-most_commons("aabbbccde")
-
-
-
-
-
-
 
