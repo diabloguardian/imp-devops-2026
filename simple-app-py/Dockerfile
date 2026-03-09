@@ -11,7 +11,7 @@ COPY simple-app-py/requirements.txt ./
 RUN pip install -r requirements.txt
 
 RUN rm requirements.txt
-#local
+###local
 #COPY *.py ./
 #repo
 COPY simple-app-py/*.py ./
