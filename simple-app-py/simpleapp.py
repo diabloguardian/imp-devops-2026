@@ -20,7 +20,7 @@ def index():
     scripts = list_scripts()
     current_datetime = datetime.now()
     datetimeformated = current_datetime.strftime("%d-%m-%Y %H:%M:%S")
-    return render_template("index.html", scripts=scripts, datetimeformated=datetimeformated)
+    return render_template("templates/index.html", scripts=scripts, datetimeformated=datetimeformated)
 
 
 @app.route("/run", methods=["POST"])
