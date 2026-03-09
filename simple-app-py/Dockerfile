@@ -26,7 +26,7 @@ RUN adduser --disabled-password --gecos "" --no-create-home pyuser
 WORKDIR /app
 
 RUN mkdir -p /app/scripts
-RUN sudo chown pyuser:pyuser /app/scripts
+RUN chown pyuser:pyuser /app/scripts
 
 COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
 
