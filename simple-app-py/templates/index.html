@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Script Runner</title>
+</head>
+<body>
+
+<h1>Hello Dennys!</h1>
+<h2>{{datetimeformated}}</h2>
+
+<h2>Execute Python Script</h2>
+
+<form id="runForm">
+    <label>Script:</label>
+    <select name="script">
+        {% for script in scripts %}
+        <option value="{{script}}">{{script}}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Input:</label><br>
+    <textarea name="input" rows="5" cols="50"></textarea>
+
+    <br><br>
+
+    <button type="submit">Run</button>
+</form>
+
+<h3>Output</h3>
+<pre id="output"></pre>
+
+<script>
+document.getElementById("runForm").onsubmit = async function(e) {
+    e.preventDefault()
+
+    const formData = new FormData(this)
+
+    const response = await fetch("/run", {
+        method: "POST",
+        body: formData
+    })
+
+    const data = await response.json()
+
+    document.getElementById("output").textContent =
+        "STDOUT:\n" + data.stdout + "\n\nSTDERR:\n" + data.stderr
+}
+</script>
+
+</body>
+</html>

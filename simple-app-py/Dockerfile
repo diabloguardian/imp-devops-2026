@@ -25,6 +25,9 @@ COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/pytho
 USER pyuser
 COPY --chown=pyuser:pyuser --from=builder /app/* .
 
+RUN mkdir scripts
+COPY --chown=pyuser:pyuser ../py-challenges/*.py ./scripts/
+
 EXPOSE 5000
 
 ENV FLASK_APP=simpleapp.py
