@@ -32,5 +32,5 @@ jobs:
         valueFile: 'helm-charts/simpleapp-py/values.yaml'
         propertyPath: 'image.tag'
         value: ${{ env.BUILD_DATE }}
-        commitChange: true
+        branch: main
         message: 'Update Image Version to ${{ env.BUILD_DATE }}'
