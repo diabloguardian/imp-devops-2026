@@ -28,11 +28,17 @@ WORKDIR /app
 RUN mkdir -p /app/scripts
 RUN chown pyuser:pyuser /app/scripts
 
+RUN mkdir -p /app/templates
+RUN chown pyuser:pyuser /app/templates
+
 COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
 
 USER pyuser
 COPY --chown=pyuser:pyuser --from=builder /app/* .
 COPY --chown=pyuser:pyuser simple-app-py/scripts/*.py /app/scripts/
+COPY --chown=pyuser:pyuser simple-app-py/templates/* /app/templates/
+
+RUN ls -lR /app
 
 EXPOSE 5000
 
