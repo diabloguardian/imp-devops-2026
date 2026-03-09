@@ -28,6 +28,7 @@ jobs:
     - name: Update docker image tag value in chart helm file
       uses: fjogeleit/yaml-update-action@main
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         valueFile: 'helm-charts/simpleapp-py/values.yaml'
         propertyPath: 'image.tag'
         value: ${{ env.BUILD_DATE }}
