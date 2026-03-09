@@ -4,12 +4,17 @@ FROM python:3.14-slim AS builder
 WORKDIR /app
 
 RUN pip install --upgrade pip
-
+#local
+#COPY requirements.txt ./
+#repo
 COPY simple-app-py/requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY simple-app-py/*.py ./
 RUN rm requirements.txt
+#local
+#COPY *.py ./
+#repo
+COPY simple-app-py/*.py ./
 
 
 ### Stage final
@@ -20,13 +25,14 @@ RUN adduser --disabled-password --gecos "" --no-create-home pyuser
 
 WORKDIR /app
 
+RUN mkdir -p /app/scripts
+
 COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/python3.14/site-packages
 
 USER pyuser
 COPY --chown=pyuser:pyuser --from=builder /app/* .
 
-RUN mkdir scripts
-COPY --chown=pyuser:pyuser ../py-challenges/*.py ./scripts/
+COPY --chown=pyuser:pyuser scripts/*.py /app/scripts/
 
 EXPOSE 5000
 
