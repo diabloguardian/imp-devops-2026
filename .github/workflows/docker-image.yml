@@ -25,4 +25,11 @@ jobs:
       run: | 
        docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
        docker push ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
-      
+    - name: Update docker image tag value in chart helm file
+      uses: fjogeleit/yaml-update-action@main
+      with:
+        valueFile: 'helm-charts/simpleapp-py/values.yaml'
+        propertyPath: 'image.tag'
+        value: ${{ env.BUILD_DATE }}
+        commitChange: true
+        message: 'Update Image Version to ${{ env.BUILD_DATE }}'
