@@ -32,7 +32,6 @@ COPY --from=builder /usr/local/lib/python3.14/site-packages /usr/local/lib/pytho
 
 USER pyuser
 COPY --chown=pyuser:pyuser --from=builder /app/* .
-
 COPY --chown=pyuser:pyuser simple-app-py/scripts/*.py /app/scripts/
 
 EXPOSE 5000
