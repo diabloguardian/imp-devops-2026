@@ -4,9 +4,9 @@ FROM python:3.14-slim AS builder
 WORKDIR /app
 
 RUN pip install --upgrade pip
-#local
+###local
 #COPY requirements.txt ./
-#repo
+###repo
 COPY simple-app-py/requirements.txt ./
 RUN pip install -r requirements.txt
 
