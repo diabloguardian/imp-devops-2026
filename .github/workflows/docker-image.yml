@@ -13,13 +13,13 @@ on:
       - 'py-challenges/*.py'
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     - name: Set current date variable
+      id: build_date
       run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_ENV
     - name: Build the Docker image
       run: docker build . --file simple-app-py/Dockerfile --tag ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
@@ -36,3 +36,11 @@ jobs:
         value: ${{ env.BUILD_DATE }}
         branch: main
         message: 'Update Image Version to ${{ env.BUILD_DATE }}'
+
+  call-build:
+    uses: diabloguardian/imp-devops-2026/.github/workflows/scan-w-trivy.yml@main
+    with:
+      dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
+      application_name: 'simpleapp-py'
+      tag: ${{ needs.build_date.env.BUILD_DATE }}
+
