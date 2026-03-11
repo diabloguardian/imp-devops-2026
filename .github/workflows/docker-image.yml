@@ -37,10 +37,11 @@ jobs:
         branch: main
         message: 'Update Image Version to ${{ env.BUILD_DATE }}'
 
-  call-build:
+  call-workflow:
     uses: diabloguardian/imp-devops-2026/.github/workflows/scan-w-trivy.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
       application_name: 'simpleapp-py'
       tag: ${{ needs.build_date.env.BUILD_DATE }}
+      dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
 
