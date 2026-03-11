@@ -1,6 +1,6 @@
 
 def read_input(input_string):
-    input_splitted = input_string.split()
+    input_splitted = input_string.splitlines()
     xyz = input_splitted[0:3]
     n = int(input_splitted[3])
     return xyz, n
@@ -21,5 +21,5 @@ def permutations(input_string):
 
 
 if __name__ == '__main__':
-    permutations("1\n1\n1\n2")
+    permutations(input())
 
