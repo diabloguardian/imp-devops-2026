@@ -18,8 +18,6 @@ def permutations(input_string):
 
 
 
-
-
 if __name__ == '__main__':
     permutations(input())
 
