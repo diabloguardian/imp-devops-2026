@@ -43,5 +43,6 @@ jobs:
       dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
       application_name: 'simpleapp-py'
       tag: ${{ needs.build_date.env.BUILD_DATE }}
+    secrets:
       dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
 
