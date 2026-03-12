@@ -6,7 +6,7 @@ def read_input(input_string):
     return xyz, n
 
 
-## Excercise for practice list comprenhension
+## Excercise for practice list comprenhension ###
 #
 def permutations(input_string):
     xyz, n = read_input(input_string)
