@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: diabloguardian/simpleapp-py
   pullPolicy: IfNotPresent
-  tag: '1773330324'
+  tag: '1773331826'
 imagePullSecrets: []
 nameOverride: ''
 fullnameOverride: ''
