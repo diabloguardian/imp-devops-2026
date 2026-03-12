@@ -15,34 +15,36 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    outputs:
+      tagname_generated : ${{ steps.build_date.outputs.BUILD_DATE }}
     steps:
     - uses: actions/checkout@v4
     - name: Set current date variable
       id: build_date
-      run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_ENV
+      run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_OUTPUT
     - name: Build the Docker image
-      run: docker build . --file simple-app-py/Dockerfile --tag ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
+      run: docker build . --file simple-app-py/Dockerfile --tag ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ steps.build_date.outputs.BUILD_DATE }}
     - name: Push image to Dockerhub
       run: | 
        docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-       docker push ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ env.BUILD_DATE }}
+       docker push ${{ vars.DOCKER_HUB_USERNAME}}/simpleapp-py:${{ steps.build_date.outputs.BUILD_DATE }}
     - name: Update docker image tag value in chart helm file
       uses: fjogeleit/yaml-update-action@main
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         valueFile: 'helm-charts/simpleapp-py/values.yaml'
         propertyPath: 'image.tag'
-        value: ${{ env.BUILD_DATE }}
+        value: ${{ steps.build_date.outputs.BUILD_DATE }}
         branch: main
-        message: 'Update Image Version to ${{ env.BUILD_DATE }}'
+        message: 'Update Image Version to ${{ steps.build_date.outputs.BUILD_DATE }}'
 
   call-workflow:
+    needs: build
     uses: diabloguardian/imp-devops-2026/.github/workflows/scan-w-trivy.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
       application_name: 'simpleapp-py'
-      tag: ${{ needs.build.steps.build_date.env.BUILD_DATE }}
+      tag: ${{ needs.build.outputs.tagname_generated }}
     secrets:
       dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
 
