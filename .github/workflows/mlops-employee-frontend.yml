@@ -1,0 +1,26 @@
+name: MLOps Attrition Employee Frontend
+
+on: 
+  push:
+    paths:
+      - 'mlops/attrition_employee/frontend/*'
+  pull_request:
+    paths:
+      - 'mlops/attrition_employee/frontend/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v4
+
+  call-workflow:
+    needs: build
+    uses: diabloguardian/imp-devops-2026/.github/workflows/build-push-docker-image.yml@main
+    with:
+      dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
+      application_name: 'attrition-frontend'
+      path_dockerfile: 'mlops/attrition_employee/frontend/Dockerfile'
+    secrets:
+      dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
+  
