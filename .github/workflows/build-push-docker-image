@@ -1,0 +1,43 @@
+name: build-push-docker-image
+
+on:
+  workflow_call:
+    inputs:
+      dockerhub_username:
+        required: true
+        type: string
+      path_dockerfile:
+        required: true
+        type: string
+        default: Dockerfile
+      application_name:
+        required: true
+        type: string
+    secrets:
+      dokerhub_token:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+      actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
+    name: Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set current date variable
+        id: build_date
+        run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_OUTPUT
+      - name: Build the Docker image
+        run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.application_name }}:${{ steps.build_date.outputs.BUILD_DATE }}
+      - name: Push image to Dockerhub
+        run: | 
+         docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+         docker push ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.application_name }}:${{ steps.build_date.outputs.BUILD_DATE }}
+
+         
