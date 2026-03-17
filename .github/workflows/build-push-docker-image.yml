@@ -33,10 +33,10 @@ jobs:
         id: build_date
         run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_OUTPUT
       - name: Build the Docker image
-        run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
+        run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ inputs.dockerhub_username }}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
       - name: Push image to Dockerhub
         run: | 
-         docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.dokerhub_token }}
-         docker push ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
+         docker login -u ${{ inputs.dockerhub_username }} -p ${{ secrets.dokerhub_token }}
+         docker push ${{ inputs.dockerhub_username }}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
 
          
