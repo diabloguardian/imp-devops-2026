@@ -6,13 +6,13 @@ on:
       dockerhub_username:
         required: true
         type: string
+      dockerhub_repository:
+        required: true
+        type: string
       path_dockerfile:
         required: true
         type: string
         default: Dockerfile
-      application_name:
-        required: true
-        type: string
     secrets:
       dokerhub_token:
         required: true
@@ -34,10 +34,10 @@ jobs:
         id: build_date
         run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_OUTPUT
       - name: Build the Docker image
-        run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.application_name }}:${{ steps.build_date.outputs.BUILD_DATE }}
+        run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
       - name: Push image to Dockerhub
         run: | 
          docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-         docker push ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.application_name }}:${{ steps.build_date.outputs.BUILD_DATE }}
+         docker push ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
 
          
