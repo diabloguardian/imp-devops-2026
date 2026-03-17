@@ -18,7 +18,6 @@ jobs:
     needs: build
     uses: diabloguardian/imp-devops-2026/.github/workflows/build-push-docker-image.yml@main
     with:
-      application_name: 'attrition-frontend'
       dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
       path_dockerfile: 'mlops/attrition_employee/frontend/Dockerfile'
       dockerhub_repository: 'attrition-frontend'
