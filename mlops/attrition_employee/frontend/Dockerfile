@@ -2,6 +2,7 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
+### path for github repository
 COPY mlops/attrition_employee/frontend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
