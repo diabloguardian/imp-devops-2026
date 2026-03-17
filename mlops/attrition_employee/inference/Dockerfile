@@ -10,7 +10,7 @@ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/pytho
 COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY mlops/attrition_employee/inference/src/ ./src/
-COPY mlops/attrition_employee/artifacts/model.pkl ./artifacts/model.pkl
+COPY mlops/attrition_employee/inference/artifacts/model.pkl ./artifacts/model.pkl
 
 EXPOSE 8080
 CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8080"]
