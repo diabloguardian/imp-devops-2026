@@ -26,10 +26,9 @@ jobs:
       contents: read # for actions/checkout to fetch code
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
-    name: Scan
+    name: Build and publish docker image
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
       - name: Set current date variable
         id: build_date
         run: echo "BUILD_DATE=$(date +%s)" >> $GITHUB_OUTPUT
@@ -37,7 +36,7 @@ jobs:
         run: docker build . --file ${{ inputs.path_dockerfile }} --tag ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
       - name: Push image to Dockerhub
         run: | 
-         docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+         docker login -u ${{ vars.DOCKER_HUB_USERNAME}} -p ${{ secrets.dokerhub_token }}
          docker push ${{ vars.DOCKER_HUB_USERNAME}}/${{ inputs.dockerhub_repository }}:${{ steps.build_date.outputs.BUILD_DATE }}
 
          
