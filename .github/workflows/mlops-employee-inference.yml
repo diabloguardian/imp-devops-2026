@@ -20,7 +20,7 @@ jobs:
     with:
       dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
       path_dockerfile: 'mlops/attrition_employee/inference/Dockerfile'
-      dockerhub_repository: 'attrition-frontend'
+      dockerhub_repository: 'attrition-inference'
     secrets:
       dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
   
