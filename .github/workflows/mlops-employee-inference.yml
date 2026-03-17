@@ -1,0 +1,26 @@
+name: MLOps Attrition Employee Inference
+
+on: 
+  push:
+    paths:
+      - 'mlops/attrition_employee/inference/*'
+  pull_request:
+    paths:
+      - 'mlops/attrition_employee/inference/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-slim
+    steps:
+      - uses: actions/checkout@v4
+
+  call-workflow:
+    needs: build
+    uses: diabloguardian/imp-devops-2026/.github/workflows/build-push-docker-image.yml@main
+    with:
+      dockerhub_username: ${{ vars.DOCKER_HUB_USERNAME}}
+      path_dockerfile: 'mlops/attrition_employee/inference/Dockerfile'
+      dockerhub_repository: 'attrition-frontend'
+    secrets:
+      dokerhub_token: ${{ secrets.DOCKER_HUB_TOKEN }}
+  
