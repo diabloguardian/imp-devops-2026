@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: prediction-frontend
-          image: techiescamp/attrition-frontend:1.0.0
+          image: diabloguardian/attrition-frontend:1773782695
           ports:
             - containerPort: 5000
           env:
